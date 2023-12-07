@@ -27,8 +27,8 @@ const register= async(req,res)=>{
             //const hash_password=await bcrypt.hash(password,saltRound);
             //const createUser=await User.create({username,email,phone,password:hash_password})
             const createUser=await User.create({username,email,phone,password})
-            res.json({createUser})
-            console.log("user created")
+            res.json({msg:createUser,token:await createUser.generateToken(),userId:createUser._id.toString()});
+            console.log("user created");
         }catch(error){ 
 
             console.log(error);
