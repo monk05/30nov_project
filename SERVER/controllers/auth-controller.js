@@ -28,7 +28,7 @@ const register= async(req,res)=>{
             //const createUser=await User.create({username,email,phone,password:hash_password})
             const createUser=await User.create({username,email,phone,password})
             res.json({msg:createUser,token:await createUser.generateToken(),userId:createUser._id.toString()});
-            console.log("user created");
+            console.log("user created"); 
         }catch(error){ 
 
             console.log(error);
@@ -36,4 +36,32 @@ const register= async(req,res)=>{
         }
 }
 
-module.exports={home,register}
+//login page 
+const login=async(req,res)=>{
+    try{
+        const{email,password}=req.body;
+        
+        const userExist=await User.findOne({email});
+
+        if(!userExist){
+            return res.status(400).json({message:"Invalid credentials"});
+        }
+
+        const isPasswordValid=await bcrypt.compare(password,userExist.password);
+        
+        if(!isPasswordValid){
+            return res.status(400).json({message:"invalid Credentials"});
+        }else{
+            res.status(200).json({
+                msg:"logged in",
+                token:await userExist.generateToken(),
+                userId:userExist._id.toString(),
+            }); 
+        }
+
+    }catch(error){
+        console.log(error);
+    }
+
+}
+module.exports={home,register,login}
