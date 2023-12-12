@@ -47,7 +47,8 @@ const login=async(req,res)=>{
             return res.status(400).json({message:"Invalid credentials"});
         }
 
-        const isPasswordValid=await bcrypt.compare(password,userExist.password);
+        //const isPasswordValid=await bcrypt.compare(password,userExist.password); 
+        const isPasswordValid=await userExist.comparePassword(password);
         
         if(!isPasswordValid){
             return res.status(400).json({message:"invalid Credentials"});
@@ -64,4 +65,7 @@ const login=async(req,res)=>{
     }
 
 }
+
+
+
 module.exports={home,register,login}
