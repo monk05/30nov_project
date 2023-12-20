@@ -20,8 +20,29 @@ export const Login=()=>{
     }
 
     //handling the form submit
-    const  handleSubmit=(e)=>{
+    const  handleSubmit=async(e)=>{
         e.preventDefault(); // prevent reload
+        try{
+            const response=await fetch(`http://localhost:5000/login`,{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(user)
+            });
+
+            if(response.ok){
+                alert("logged in");
+                setUser({
+                    email:"",
+                    password:""
+                })
+            }
+            console.log(response)
+
+        }catch(error){
+            console.log("login ",error);
+        }
         
     }
     
