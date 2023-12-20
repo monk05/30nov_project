@@ -1,12 +1,17 @@
 import { useState } from "react"
+import {useNavigate} from "react-router-dom"
 
 export const Register=()=>{
+    const navigate=useNavigate();
+
+    
     const [user,setUser]=useState({ //creating objects 
         username:"",
         email:"",
         phone:"",
         password:""
     });
+
 
     //handling the input
 
@@ -22,8 +27,31 @@ export const Register=()=>{
     }
 
     //handling the form submit
-    const  handleSubmit=(e)=>{
+    const  handleSubmit=async(e)=>{
         e.preventDefault(); // prevent reload
+        console.log(user);
+        try{
+            const response=await fetch(`http://localhost:5000/register`,{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(user),
+            });
+            if(response.ok){
+                setUser({
+                    username:"",
+                    email:"",
+                    phone:"",
+                    password:""
+                })
+                navigate("/login");
+            }
+            console.log(response)
+
+        }catch(error){
+            console.log(error)
+        }
         
     }
     
