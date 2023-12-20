@@ -1,11 +1,15 @@
 import {BrowserRouter,Routes,Route} from "react-router-dom";
+import "./index.css"
 import {Home} from "./pages/Home"
 import {About } from "./pages/About";
 import { Contact } from "./pages/Contact";
 import { Service } from "./pages/Service";
 import { Register } from "./pages/Register";
 import { Login } from "./pages/Login";
+import { Error } from "./pages/Error";
+
 import { Navbar } from "./components/Navbar";
+import { Footer } from "./components/footer/Footer";
 const App=()=>{
   return <>
     <BrowserRouter>
@@ -17,7 +21,9 @@ const App=()=>{
         <Route path="/Service" element={<Service/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/login" element={<Login/>}/> 
+        <Route path="*" element={<Error/>}/>
       </Routes>
+      <Footer/>
     </BrowserRouter>
   </>
 }
