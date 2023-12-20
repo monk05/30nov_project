@@ -5,12 +5,12 @@ const validate=(schema)=>async(req,res,next)=>{
         next();
 
     }catch(err){
-        //const message=err.errors[0].message
+        //const message=err.errors[0].message //give by zod validator
        // console.log(message)
         //res.status(400).json({msg:message})
         const status=400;
         const message=" fill details correctly";
-        const extraDetails=err.errors[0].message;
+        const extraDetails=err.errors[0].message; //by zod validator
 
         const error={
             status,message,extraDetails,

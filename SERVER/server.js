@@ -1,10 +1,22 @@
 const express=require("express");
+const cors=require("cors")
 
 const app = express();
 const db=require("./utilities/db");
 const connect_DB = require("./utilities/db");
 const errorMiddleware = require("./middleware/error-middleware");
 //const routes=require("./Router/auth-routes")
+
+
+//handling CORS issue
+const corsOption={
+    origin:" http://localhost:5173",
+    methods:"GET,POST,PUT,DELETE,PATCH,HEAD",
+    credentials:true,
+};
+
+app.use(cors(corsOption));
+//
 
 app.use(express.json()) //middle ware to get data from postman 
 const port=process.env.PORT;
