@@ -1,6 +1,9 @@
 import { useState } from "react"
+import { useAuth } from "../store/auth";
 
 export const Login=()=>{
+    const {storeTokenInLS}=useAuth();
+
     const [user,setUser]=useState({ //creating objects 
         email:"",
         password:""
@@ -33,6 +36,8 @@ export const Login=()=>{
 
             if(response.ok){
                 alert("logged in");
+                const res_data=await response.json();
+                storeTokenInLS(res_data.token);
                 setUser({
                     email:"",
                     password:""

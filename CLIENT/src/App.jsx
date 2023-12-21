@@ -7,6 +7,7 @@ import { Service } from "./pages/Service";
 import { Register } from "./pages/Register";
 import { Login } from "./pages/Login";
 import { Error } from "./pages/Error";
+import { Logout } from "./pages/Logout";
 
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/footer/Footer";
@@ -20,7 +21,8 @@ const App=()=>{
         <Route path="/contact" element={<Contact/>}/>
         <Route path="/Service" element={<Service/>}/>
         <Route path="/register" element={<Register/>}/>
-        <Route path="/login" element={<Login/>}/> 
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/logout" element={<Logout/>}/> 
         <Route path="*" element={<Error/>}/>
       </Routes>
       <Footer/>

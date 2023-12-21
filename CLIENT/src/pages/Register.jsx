@@ -1,8 +1,10 @@
 import { useState } from "react"
 import {useNavigate} from "react-router-dom"
+import { useAuth } from "../store/auth";
 
 export const Register=()=>{
     const navigate=useNavigate();
+    const storeTokenInLS=useAuth();
 
     
     const [user,setUser]=useState({ //creating objects 
@@ -39,6 +41,10 @@ export const Register=()=>{
                 body:JSON.stringify(user),
             });
             if(response.ok){
+                const res_data=await response.json();
+                console.log("response from server",res_data)
+                storeTokenInLS(res_data.token);
+                //localStorage.setItem("token",res_data.token); //you have to do this every time to get token that is why above function is made 
                 setUser({
                     username:"",
                     email:"",
