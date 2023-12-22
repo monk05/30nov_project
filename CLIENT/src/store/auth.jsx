@@ -1,4 +1,4 @@
-import {createContext, useContext, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 
 export const AuthContext=createContext();
 
@@ -6,6 +6,7 @@ export const AuthContext=createContext();
 
 export const AuthProvider=({children})=>{
     const [token,setToken]=useState("")
+    const [user,setUser]=useState("") // made for passing data of authorization
 
     const storeTokenInLS=(serverToken)=>{
         setToken(serverToken)
@@ -20,8 +21,35 @@ export const AuthProvider=({children})=>{
         return localStorage.removeItem("token")
 
     }
+
+    //jwt Authentication -to get the currently logged in user data 
+    const userAuthentication=async()=>{
+        try{
+            const response=await fetch("http://localhost:5000/user",{
+                methods:"GET",
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            });
+            if(response.ok){
+                const data= await response.json();
+                console.log(data)
+                setUser(data.userData);
+
+            }
+
+        }catch(error){
+            console.log(error)
+        }
+    }
+    useEffect(()=>{
+        userAuthentication();
+    })
+
+
+
     return(
-        <AuthContext.Provider value={{isLoggedIn,storeTokenInLS,LogoutUser}}>
+        <AuthContext.Provider value={{isLoggedIn,storeTokenInLS,LogoutUser,user}}>
             {children}
         </AuthContext.Provider>
     );
