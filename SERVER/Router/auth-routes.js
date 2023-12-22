@@ -9,7 +9,7 @@ Router.route("/").get(authcontroller.home)
 Router.route("/register").post(validate(signupSchema),authcontroller.register);
 Router.route("/login").post(authcontroller.login);
 
-Router.route("/user").get(authMiddleware,authcontroller.userData)
+Router.route("/user").get(authMiddleware,authcontroller.user)
 
 
 module.exports=Router;

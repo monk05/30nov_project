@@ -68,9 +68,10 @@ const login=async(req,res)=>{
 
 //user data (to send user data  of currently logged in user)
 
-const userData=async()=>{
+const user=async(req,res)=>{
     try{
         const userData=req.user;
+        return res.status(200).json({userData})
 
     }catch(error){
         console.log(`error from userdata route ${error}`);
@@ -80,4 +81,4 @@ const userData=async()=>{
 
 
 
-module.exports={home,register,login,userData}
+module.exports={home,register,login,user}
