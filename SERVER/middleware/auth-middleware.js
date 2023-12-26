@@ -19,7 +19,7 @@ const authMiddleware=async(req,res,next)=>{
         next();
 
     }catch(error){
-        console.log("error check",error)
+        console.log("token not available");
     }
 
 }

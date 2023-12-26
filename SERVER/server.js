@@ -22,6 +22,7 @@ app.use(express.json()) //middle ware to get data from postman
 const port=process.env.PORT;
 app.use(require("./Router/auth-routes"))
 app.use(require("./Router/contact-route"))
+app.use(require("./Router/service-route"))
 
 app.use(errorMiddleware); // postion matters 
 connect_DB().then(()=>{
