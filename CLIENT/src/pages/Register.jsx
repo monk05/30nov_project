@@ -1,11 +1,10 @@
 import { useState } from "react"
 import {useNavigate} from "react-router-dom"
 import { useAuth } from "../store/auth";
+import { toast } from "react-toastify";
 
 export const Register=()=>{
-    const navigate=useNavigate();
-    const storeTokenInLS=useAuth();
-
+    
     
     const [user,setUser]=useState({ //creating objects 
         username:"",
@@ -13,7 +12,9 @@ export const Register=()=>{
         phone:"",
         password:""
     });
-
+    
+    const navigate=useNavigate();
+    const { storeTokenInLS }=useAuth();
 
     //handling the input
 
@@ -31,7 +32,6 @@ export const Register=()=>{
     //handling the form submit
     const  handleSubmit=async(e)=>{
         e.preventDefault(); // prevent reload
-        console.log(user);
         try{
             const response=await fetch(`http://localhost:5000/register`,{
                 method:"POST",
@@ -40,9 +40,11 @@ export const Register=()=>{
                 },
                 body:JSON.stringify(user),
             });
+            const res_data=await response.json();
+            console.log("res from server",res_data);
+    
             if(response.ok){
-                const res_data=await response.json();
-                console.log("response from server",res_data)
+                //console.log("response from server",res_data)
                 storeTokenInLS(res_data.token);
                 //localStorage.setItem("token",res_data.token); //you have to do this every time to get token that is why above function is made 
                 setUser({
@@ -51,7 +53,11 @@ export const Register=()=>{
                     phone:"",
                     password:""
                 })
+                toast.success("Registration successfull")
                 navigate("/login");
+            }
+            else{
+                toast.error(res_data.extraDetails ? res_data.extraDetails:res_data.message);
             }
             console.log(response)
 

@@ -7,6 +7,7 @@ export const AuthContext=createContext();
 export const AuthProvider=({children})=>{
     const [token,setToken]=useState("")
     const [user,setUser]=useState("") // made for passing data of authorization
+    const [services,setService]= useState("")
 
     const storeTokenInLS=(serverToken)=>{
         setToken(serverToken)
@@ -26,7 +27,7 @@ export const AuthProvider=({children})=>{
     const userAuthentication=async()=>{
         try{
             const response=await fetch("http://localhost:5000/user",{
-                methods:"GET",
+                method:"GET",
                 headers:{
                     Authorization:`Bearer ${token}`
                 }
@@ -42,14 +43,30 @@ export const AuthProvider=({children})=>{
             console.log(error)
         }
     }
+    const getServices=async()=>{
+        try{
+            const response=await fetch("http://localhost:5000/service",{
+                method:"GET",
+            });
+            if(response.ok){
+                const data=await response.json();
+                //console.log(data.msg);
+                setService(data.msg)
+            }
+
+        }catch(error){
+            console.log(`service frontend error ${error}`)
+        }
+    }
     useEffect(()=>{
+        getServices();
         userAuthentication();
     })
 
 
 
     return(
-        <AuthContext.Provider value={{isLoggedIn,storeTokenInLS,LogoutUser,user}}>
+        <AuthContext.Provider value={{isLoggedIn,storeTokenInLS,LogoutUser,user,services}}>
             {children}
         </AuthContext.Provider>
     );

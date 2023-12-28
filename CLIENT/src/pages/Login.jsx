@@ -1,8 +1,11 @@
 import { useState } from "react"
 import { useAuth } from "../store/auth";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const Login=()=>{
     const {storeTokenInLS}=useAuth();
+    const navigate=useNavigate();
 
     const [user,setUser]=useState({ //creating objects 
         email:"",
@@ -34,14 +37,19 @@ export const Login=()=>{
                 body:JSON.stringify(user)
             });
 
+            const res_data=await response.json();
             if(response.ok){
-                alert("logged in");
-                const res_data=await response.json();
+                toast.success("logged in");
                 storeTokenInLS(res_data.token);
                 setUser({
                     email:"",
                     password:""
                 })
+                navigate("/")
+            }
+            else{
+                toast.error(res_data.extraDetails ? res_data.extraDetails:res_data.message);
+                //console.log("invali credentials")
             }
             console.log(response)
 
