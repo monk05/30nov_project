@@ -7,7 +7,7 @@ export const Navbar=()=>{
         <header>
             <div className="container">
                 <div className="logo-brand">
-                    <a href="/">logo</a>
+                    <img src="/images/logo.png" width="200" height="50" />
                 </div>
                 <nav>
                     <ul>
