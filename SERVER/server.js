@@ -24,6 +24,9 @@ app.use(require("./Router/auth-routes"))
 app.use(require("./Router/contact-route"))
 app.use(require("./Router/service-route"))
 
+//for admin route
+app.use(require("./Router/admin-route"))
+
 app.use(errorMiddleware); // postion matters 
 connect_DB().then(()=>{
     app.listen(port,()=>{
