@@ -4,7 +4,7 @@ const User=require("../model/user-model")
 const authMiddleware=async(req,res,next)=>{
     const token=req.header('Authorization'); //not headers
     if(!token){
-        return res.status(401).json({message:"unauthorized HTTP"})
+        return res.status(401).json({message:"unauthorized HTTP,Token not provided"})
     }
     const jwtToken=token.replace("Bearer", "").trim();
     //console.log(jwtToken);
